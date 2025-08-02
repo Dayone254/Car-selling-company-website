@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Phone } from "lucide-react"
 import Link from "next/link"
+import { MobileNavigation } from "./mobile-navigation"
 
 export function DynamicHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -91,6 +92,7 @@ export function DynamicHeader() {
                 +254 700 123 456
               </span>
             </div>
+            <MobileNavigation />
           </div>
         </div>
       </div>

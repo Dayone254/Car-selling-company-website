@@ -4,9 +4,9 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'Nairobi Prime Motors - Premium Automotive Excellence',
+  description: 'Nairobi\'s premier luxury car dealership. Discover meticulously curated vehicles that embody sophistication and performance. Premium BMW, Mercedes, Audi, Toyota, and Lexus vehicles.',
+  generator: 'Next.js',
 }
 
 export default function RootLayout({

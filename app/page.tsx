@@ -22,6 +22,7 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { getFeaturedVehicles } from "@/lib/vehicles-data"
+import { MobileNavigation } from "@/components/mobile-navigation"
 
 export default function HomePage() {
   const featuredVehicles = getFeaturedVehicles()
@@ -105,9 +106,12 @@ export default function HomePage() {
               </Link>
             </nav>
 
-            <Button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-light px-6 py-2 rounded-full transition-all duration-200 hover:shadow-lg border border-white/30">
-              Book Test Drive
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Button className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-light px-6 py-2 rounded-full transition-all duration-200 hover:shadow-lg border border-white/30">
+                Book Test Drive
+              </Button>
+              <MobileNavigation />
+            </div>
           </div>
         </div>
       </header>
@@ -922,7 +926,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{
           __html: `
             function updateHeader() {
-      const header = document.getElementById('header');
+              const header = document.getElementById('header');
               if (!header) return;
               
               if (window.scrollY > 50) {
@@ -930,12 +934,24 @@ export default function HomePage() {
                 header.classList.add('bg-white', 'backdrop-blur-md', 'border-b', 'border-gray-200', 'shadow-md');
                 header.classList.remove('bg-transparent');
                 
-                // Update logo text color
-                const logoText = header.querySelector('span');
-                if (logoText) {
-                  logoText.classList.remove('text-white');
-                  logoText.classList.add('text-gray-900');
+                // Update logo text color - target the specific span within the logo link
+                const logoLink = header.querySelector('a[href="/"]');
+                if (logoLink) {
+                  const logoText = logoLink.querySelector('span');
+                  if (logoText) {
+                    logoText.classList.remove('text-white');
+                    logoText.classList.add('text-gray-900');
+                  }
                 }
+                
+                // Also update the logo text that might be directly in the header
+                const allLogoTexts = header.querySelectorAll('span');
+                allLogoTexts.forEach(span => {
+                  if (span.textContent === 'Nairobi Prime Motors') {
+                    span.classList.remove('text-white');
+                    span.classList.add('text-gray-900');
+                  }
+                });
                 
                 // Update navigation links
                 const navLinks = header.querySelectorAll('nav a');
@@ -954,17 +970,36 @@ export default function HomePage() {
                   button.classList.remove('bg-white/20', 'hover:bg-white/30', 'border-white/30');
                   button.classList.add('bg-[#B89E5A]', 'hover:bg-[#9A8449]', 'text-white');
                 }
+                
+                // Update mobile navigation button
+                const mobileNavButton = header.querySelector('[data-mobile-nav]');
+                if (mobileNavButton) {
+                  mobileNavButton.classList.remove('text-white');
+                  mobileNavButton.classList.add('text-gray-900');
+                }
               } else {
                 // Remove solid background classes
                 header.classList.remove('bg-white', 'backdrop-blur-md', 'border-b', 'border-gray-200', 'shadow-md');
                 header.classList.add('bg-transparent');
                 
                 // Restore logo text color
-                const logoText = header.querySelector('span');
-                if (logoText) {
-                  logoText.classList.remove('text-gray-900');
-                  logoText.classList.add('text-white');
+                const logoLink = header.querySelector('a[href="/"]');
+                if (logoLink) {
+                  const logoText = logoLink.querySelector('span');
+                  if (logoText) {
+                    logoText.classList.remove('text-gray-900');
+                    logoText.classList.add('text-white');
+                  }
                 }
+                
+                // Also restore the logo text that might be directly in the header
+                const allLogoTexts = header.querySelectorAll('span');
+                allLogoTexts.forEach(span => {
+                  if (span.textContent === 'Nairobi Prime Motors') {
+                    span.classList.remove('text-gray-900');
+                    span.classList.add('text-white');
+                  }
+                });
                 
                 // Restore navigation links
                 const navLinks = header.querySelectorAll('nav a');
@@ -972,7 +1007,7 @@ export default function HomePage() {
                   link.classList.remove('text-[#B89E5A]', 'hover:text-[#9A8449]', 'text-gray-600', 'hover:text-gray-900');
                   if (index === 0) {
                     link.classList.add('text-white', 'hover:text-[#B89E5A]');
-      } else {
+                  } else {
                     link.classList.add('text-white/90', 'hover:text-white');
                   }
                 });
@@ -982,6 +1017,13 @@ export default function HomePage() {
                 if (button) {
                   button.classList.remove('bg-[#B89E5A]', 'hover:bg-[#9A8449]', 'text-white');
                   button.classList.add('bg-white/20', 'hover:bg-white/30', 'border-white/30', 'text-white');
+                }
+                
+                // Restore mobile navigation button
+                const mobileNavButton = header.querySelector('[data-mobile-nav]');
+                if (mobileNavButton) {
+                  mobileNavButton.classList.remove('text-gray-900');
+                  mobileNavButton.classList.add('text-white');
                 }
               }
             }
